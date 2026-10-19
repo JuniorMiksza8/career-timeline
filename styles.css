@@ -816,10 +816,6 @@ p {
   color: var(--ink-soft);
 }
 
-.stack-icon-invert {
-  filter: invert(1);
-}
-
 .stack-item > span {
   display: grid;
   min-width: 0;
@@ -872,6 +868,88 @@ p {
   letter-spacing: 0.1em;
   line-height: 1;
   transform: translateY(-50%);
+}
+
+.stack-flow-layered {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.stack-lane {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.stack-lane-label {
+  margin: 0;
+  padding-top: 0.15rem;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.stack-lane-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: -0.5rem 0 -0.5rem 7.75rem;
+  color: var(--ink-muted);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stack-lane-link span {
+  color: var(--acid);
+  font-size: 1rem;
+}
+
+.stack-boundary-cloud {
+  position: relative;
+}
+
+.stack-boundary-cluster {
+  padding-top: 1.6rem;
+  border: 1px solid rgba(240, 240, 232, 0.24);
+  border-style: solid;
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.stack-boundary-cluster > .stack-boundary-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--ink);
+  text-transform: uppercase;
+}
+
+.stack-boundary-cluster > .stack-boundary-label img {
+  width: 1rem;
+  height: 1rem;
+}
+
+.stack-items-row {
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+
+.stack-concerns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stack-concerns .stack-item {
+  border-style: dashed;
+  background: transparent;
 }
 
 .company-panel,
@@ -1274,6 +1352,15 @@ p {
     bottom: calc(var(--stack-gap) / -2);
     left: 0.15rem;
     transform: translateY(50%) rotate(90deg);
+  }
+
+  .stack-lane {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  .stack-lane-link {
+    margin-left: 0;
   }
 
 }

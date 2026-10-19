@@ -160,85 +160,192 @@
                     Read about the acquisition <span aria-hidden="true">↗</span>
                   </a>
                 </div>
-                <figure class="stack-flow" aria-label="Technology flow: storefront and backoffice through Node.js services to payments and AWS data stores">
-                  <ol class="stack-stages">
-                    <li class="stack-stage">
+                <figure class="stack-flow stack-flow-layered" aria-label="Reference architecture: storefront, backoffice, and checkout reach an API layer on AWS container services, where commerce services and queue workers use document, cache, object storage, and CDN layers, settle payments with external providers, and are governed by access control, performance, discoverability, and reliability practices">
+                  <div class="stack-lane">
+                    <p class="stack-lane-label">Clients</p>
+                    <div class="stack-stage">
                       <p class="stack-stage-label"><span>01</span> Channels</p>
-                      <ul class="stack-items">
+                      <ul class="stack-items stack-items-row">
                         <li class="stack-item">
-                          <img class="stack-icon-invert" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/nextjs/nextjs-original.svg" alt="">
-                          <span><strong>Next.js</strong><small>SSR storefront</small></span>
-                        </li>
-                        <li class="stack-item">
-                          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="">
-                          <span><strong>React / Material UI</strong><small>Backoffice</small></span>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="stack-stage">
-                      <p class="stack-stage-label"><span>02</span> Services</p>
-                      <ul class="stack-items">
-                        <li class="stack-item stack-item-primary">
-                          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/nodejs/nodejs-original.svg" alt="">
-                          <span><strong>Node.js / TypeScript</strong><small>Microservices</small></span>
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="3" y="4.5" width="18" height="15" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                            <path d="M3 8.5h18M7 13h6M7 16h4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                          </svg>
+                          <span><strong>Web storefront</strong><small>Server-side rendering</small></span>
                         </li>
                         <li class="stack-item">
                           <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M4 7h11M4 12h16M4 17h11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                            <path d="M13 5.2 16.2 7 13 8.8M17 14.2 20.2 16 17 17.8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <rect x="3.5" y="3.5" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                            <rect x="13.5" y="3.5" width="7" height="4" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                            <rect x="13.5" y="10.5" width="7" height="10" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                            <rect x="3.5" y="13.5" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
                           </svg>
-                          <span><strong>Queues</strong><small>Background workers</small></span>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="stack-stage">
-                      <p class="stack-stage-label"><span>03</span> Integrations</p>
-                      <ul class="stack-items">
-                        <li class="stack-item">
-                          <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M12 4.2 19.2 12 12 19.8 4.8 12Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
-                          </svg>
-                          <span><strong>Pix</strong><small>Instant payments</small></span>
+                          <span><strong>Backoffice</strong><small>Store management</small></span>
                         </li>
                         <li class="stack-item">
                           <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <rect x="3" y="6" width="18" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
-                            <path d="M3 10.5h18" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+                            <path d="M4 5h2.5l2 10h9l2-7H8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <circle cx="10" cy="19" r="1.3" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+                            <circle cx="17" cy="19" r="1.3" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
                           </svg>
-                          <span><strong>Payment gateways</strong><small>Webhooks</small></span>
+                          <span><strong>Checkout</strong><small>Purchase flows</small></span>
                         </li>
                       </ul>
-                    </li>
-                    <li class="stack-boundary">
+                    </div>
+                  </div>
+
+                  <p class="stack-lane-link"><span aria-hidden="true">↓</span> Requests reach the API layer</p>
+
+                  <div class="stack-lane">
+                    <p class="stack-lane-label">Runtime</p>
+                    <div class="stack-boundary stack-boundary-cloud">
                       <p class="stack-boundary-label">AWS</p>
                       <ol class="stack-stages">
+                        <li class="stack-boundary stack-boundary-cluster" style="--span: 2">
+                          <p class="stack-boundary-label">Container services</p>
+                          <ol class="stack-stages">
+                            <li class="stack-stage">
+                              <p class="stack-stage-label"><span>02</span> Edge</p>
+                              <ul class="stack-items">
+                                <li class="stack-item">
+                                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M3.5 12h9M9.5 8.5 13 12l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M15 5h5.5v14H15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                                  </svg>
+                                  <span><strong>API layer</strong><small>Auth and routing</small></span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li class="stack-stage">
+                              <p class="stack-stage-label"><span>03</span> Workloads</p>
+                              <ul class="stack-items">
+                                <li class="stack-item stack-item-primary">
+                                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <rect x="3.5" y="3.5" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                                    <rect x="13.5" y="3.5" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                                    <rect x="3.5" y="13.5" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                                    <rect x="13.5" y="13.5" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                                  </svg>
+                                  <span><strong>Services</strong><small>Commerce domains</small></span>
+                                </li>
+                                <li class="stack-item">
+                                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M4 7h11M4 12h16M4 17h11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                    <path d="M13 5.2 16.2 7 13 8.8M17 14.2 20.2 16 17 17.8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                  </svg>
+                                  <span><strong>Message queue</strong><small>Async jobs</small></span>
+                                </li>
+                                <li class="stack-item">
+                                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+                                    <path d="M12 8.5V12l2.5 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                  </svg>
+                                  <span><strong>Workers</strong><small>Integration tasks</small></span>
+                                </li>
+                              </ul>
+                            </li>
+                          </ol>
+                        </li>
                         <li class="stack-stage">
-                          <p class="stack-stage-label"><span>04</span> Data and cloud</p>
+                          <p class="stack-stage-label"><span>04</span> Data and delivery</p>
                           <ul class="stack-items">
                             <li class="stack-item">
-                              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/mongodb/mongodb-original.svg" alt="">
-                              <span><strong>MongoDB</strong><small>Multi-store data</small></span>
+                              <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M7 3.5h7l4 4V20.5H7Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                                <path d="M14 3.5V8h4M9.5 12.5h5M9.5 16h3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                              </svg>
+                              <span><strong>Document store</strong><small>Multi-store tenancy</small></span>
                             </li>
                             <li class="stack-item">
-                              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/redis/redis-original.svg" alt="">
-                              <span><strong>Redis</strong><small>Cache</small></span>
+                              <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M13 3.5 6 13.5h5.5L10.5 20.5 18 10h-5.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                              </svg>
+                              <span><strong>Cache</strong><small>Hot reads</small></span>
                             </li>
                             <li class="stack-item">
                               <svg viewBox="0 0 24 24" aria-hidden="true">
                                 <path d="M4 8.5 12 4.5l8 4L12 12.5 4 8.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
                                 <path d="M4 12.5 12 16.5l8-4M4 16.5 12 20.5l8-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
                               </svg>
-                              <span><strong>S3 / CloudFront</strong><small>Assets</small></span>
+                              <span><strong>Object storage</strong><small>Media and assets</small></span>
                             </li>
                             <li class="stack-item">
-                              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/docker/docker-original.svg" alt="">
-                              <span><strong>Docker</strong><small>Containerized services</small></span>
+                              <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+                                <path d="M4 12h16M12 4c2.3 2.2 3.5 4.9 3.5 8s-1.2 5.8-3.5 8c-2.3-2.2-3.5-4.9-3.5-8S9.7 6.2 12 4Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                              </svg>
+                              <span><strong>CDN</strong><small>Edge delivery</small></span>
                             </li>
                           </ul>
                         </li>
                       </ol>
-                    </li>
-                  </ol>
+                    </div>
+                  </div>
+
+                  <p class="stack-lane-link"><span aria-hidden="true">↓</span> Services settle payments with external providers</p>
+
+                  <div class="stack-lane">
+                    <p class="stack-lane-label">Integrations</p>
+                    <div class="stack-stage">
+                      <p class="stack-stage-label"><span>05</span> Payments</p>
+                      <ul class="stack-items stack-items-row">
+                        <li class="stack-item">
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="3" y="6" width="18" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                            <path d="M3 10.5h18" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+                          </svg>
+                          <span><strong>Payment gateways</strong><small>Card processing</small></span>
+                        </li>
+                        <li class="stack-item">
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 4.2 19.2 12 12 19.8 4.8 12Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                          </svg>
+                          <span><strong>Instant payments</strong><small>Real-time transfers</small></span>
+                        </li>
+                        <li class="stack-item">
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M4 7.5h8M4 12h8M4 16.5h6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                            <path d="M15 14.2 17 16.4 20.5 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                          </svg>
+                          <span><strong>Webhooks</strong><small>Status reconciliation</small></span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="stack-lane">
+                    <p class="stack-lane-label">Cross-cutting</p>
+                    <ul class="stack-concerns">
+                      <li class="stack-item">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <rect x="5" y="10.5" width="14" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                          <path d="M8.5 10.5V7.5a3.5 3.5 0 0 1 7 0v3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                        </svg>
+                        <span><strong>Access control</strong><small>Role-based access</small></span>
+                      </li>
+                      <li class="stack-item">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M4.5 16.5a7.5 7.5 0 1 1 15 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                          <path d="M12 16.5 15.5 11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                        </svg>
+                        <span><strong>Performance</strong><small>Caching and indexing</small></span>
+                      </li>
+                      <li class="stack-item">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <circle cx="10.5" cy="10.5" r="5.2" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+                          <path d="M14.4 14.4 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                        </svg>
+                        <span><strong>Discoverability</strong><small>SEO and Web Vitals</small></span>
+                      </li>
+                      <li class="stack-item">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M16.8 7.2A6.2 6.2 0 1 0 18 13.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                          <path d="M16.2 4.4v3.4h3.4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                        <span><strong>Reliability</strong><small>Payment recovery flows</small></span>
+                      </li>
+                    </ul>
+                  </div>
                 </figure>
               </section>
 
@@ -288,24 +395,25 @@
                     <li><a href="https://vegasolutions.com.br/cases/" target="_blank" rel="noreferrer">Receivables assignment <span aria-hidden="true">↗</span></a></li>
                   </ul>
                 </div>
-                <figure class="stack-flow" aria-label="Technology flow: financial files and registry APIs through Java services to reconciled data on AWS">
-                  <ol class="stack-stages">
-                    <li class="stack-stage">
+                <figure class="stack-flow stack-flow-layered" aria-label="Reference architecture: card network files, banking files, and a receivables registry feed ingestion on AWS, where file parsers and integration clients pass data to financial services, batch jobs, and state machines that persist to a relational database, reports, and an audit trail, governed by idempotency, reconciliation, traceability, and validation controls">
+                  <div class="stack-lane">
+                    <p class="stack-lane-label">Sources</p>
+                    <div class="stack-stage">
                       <p class="stack-stage-label"><span>01</span> Inputs</p>
-                      <ul class="stack-items">
+                      <ul class="stack-items stack-items-row">
                         <li class="stack-item">
                           <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M7 3.5h7l4 4V20.5H7Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
-                            <path d="M14 3.5V8h4M9 12h6M9 16h4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                            <rect x="3" y="6" width="18" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                            <path d="M3 10.5h18" fill="none" stroke="currentColor" stroke-width="1.5"></path>
                           </svg>
-                          <span><strong>Card network files</strong><small>Network exchange</small></span>
+                          <span><strong>Card network files</strong><small>Settlement exchange</small></span>
                         </li>
                         <li class="stack-item">
                           <svg viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M6 4.5h12v15H6Z" fill="none" stroke="currentColor" stroke-width="1.5"></path>
                             <path d="M9 8.5h6M9 12h6M9 15.5h6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
                           </svg>
-                          <span><strong>Banking files</strong><small>Fixed-width</small></span>
+                          <span><strong>Banking files</strong><small>Fixed-width layouts</small></span>
                         </li>
                         <li class="stack-item">
                           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -314,50 +422,75 @@
                             <circle cx="17.5" cy="17" r="2" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
                             <path d="M8 12h7.5M8 11.2 15.5 7.8M8 12.8 15.5 16.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
                           </svg>
-                          <span><strong>CERC</strong><small>Receivables registry</small></span>
+                          <span><strong>Receivables registry</strong><small>Registry APIs</small></span>
                         </li>
                       </ul>
-                    </li>
-                    <li class="stack-stage">
-                      <p class="stack-stage-label"><span>02</span> Processing</p>
-                      <ul class="stack-items">
-                        <li class="stack-item stack-item-primary">
-                          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/java/java-original.svg" alt="">
-                          <span><strong>Java / Spring Boot</strong><small>Services</small></span>
-                        </li>
-                        <li class="stack-item">
-                          <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
-                            <path d="M12 8.5V12l2.5 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                          </svg>
-                          <span><strong>Settlement jobs</strong><small>Batch processing</small></span>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="stack-stage">
-                      <p class="stack-stage-label"><span>03</span> Controls</p>
-                      <ul class="stack-items">
-                        <li class="stack-item">
-                          <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M16.8 7.2A6.2 6.2 0 1 0 18 13.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                            <path d="M16.2 4.4v3.4h3.4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                          </svg>
-                          <span><strong>Idempotency</strong><small>Retry-safe APIs</small></span>
-                        </li>
-                        <li class="stack-item">
-                          <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M4 7.5h8M4 12h8M4 16.5h6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                            <path d="M15 14.2 17 16.4 20.5 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                          </svg>
-                          <span><strong>Reconciliation</strong><small>Audit trail</small></span>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="stack-boundary">
+                    </div>
+                  </div>
+
+                  <p class="stack-lane-link"><span aria-hidden="true">↓</span> Files and API calls enter ingestion</p>
+
+                  <div class="stack-lane">
+                    <p class="stack-lane-label">Runtime</p>
+                    <div class="stack-boundary stack-boundary-cloud">
                       <p class="stack-boundary-label">AWS</p>
                       <ol class="stack-stages">
+                        <li class="stack-boundary stack-boundary-cluster" style="--span: 2">
+                          <p class="stack-boundary-label">Service platform</p>
+                          <ol class="stack-stages">
+                            <li class="stack-stage">
+                              <p class="stack-stage-label"><span>02</span> Ingestion</p>
+                              <ul class="stack-items">
+                                <li class="stack-item">
+                                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M7 3.5h7l4 4V20.5H7Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                                    <path d="M14 3.5V8h4M9 12h6M9 16h4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                  </svg>
+                                  <span><strong>File parsers</strong><small>Validation and parsing</small></span>
+                                </li>
+                                <li class="stack-item">
+                                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M3.5 12h9M9.5 8.5 13 12l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M15 5h5.5v14H15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                                  </svg>
+                                  <span><strong>Integration clients</strong><small>Idempotent requests</small></span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li class="stack-stage">
+                              <p class="stack-stage-label"><span>03</span> Processing</p>
+                              <ul class="stack-items">
+                                <li class="stack-item stack-item-primary">
+                                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <rect x="3.5" y="3.5" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                                    <rect x="13.5" y="3.5" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                                    <rect x="3.5" y="13.5" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                                    <rect x="13.5" y="13.5" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                                  </svg>
+                                  <span><strong>Services</strong><small>Financial domain rules</small></span>
+                                </li>
+                                <li class="stack-item">
+                                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+                                    <path d="M12 8.5V12l2.5 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                  </svg>
+                                  <span><strong>Batch jobs</strong><small>Settlement cycles</small></span>
+                                </li>
+                                <li class="stack-item">
+                                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <circle cx="6" cy="6.5" r="2" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+                                    <circle cx="18" cy="6.5" r="2" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+                                    <circle cx="12" cy="18" r="2" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+                                    <path d="M8 6.5h8M17 8.3 13 16.2M11 16.2 7 8.3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                  </svg>
+                                  <span><strong>State machines</strong><small>Retry-safe workflows</small></span>
+                                </li>
+                              </ul>
+                            </li>
+                          </ol>
+                        </li>
                         <li class="stack-stage">
-                          <p class="stack-stage-label"><span>04</span> Data and ops</p>
+                          <p class="stack-stage-label"><span>04</span> Data</p>
                           <ul class="stack-items">
                             <li class="stack-item">
                               <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -365,19 +498,58 @@
                                 <path d="M5.5 7v10c0 1.3 2.9 2.4 6.5 2.4s6.5-1.1 6.5-2.4V7" fill="none" stroke="currentColor" stroke-width="1.5"></path>
                                 <path d="M5.5 12c0 1.3 2.9 2.4 6.5 2.4s6.5-1.1 6.5-2.4" fill="none" stroke="currentColor" stroke-width="1.5"></path>
                               </svg>
-                              <span><strong>Relational database</strong><small>SQL</small></span>
+                              <span><strong>Relational database</strong><small>Transactional records</small></span>
+                            </li>
+                            <li class="stack-item">
+                              <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M5 19.5V11M10 19.5V5M15 19.5v-6M20 19.5V8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                              </svg>
+                              <span><strong>Reporting</strong><small>Financial reports</small></span>
                             </li>
                             <li class="stack-item">
                               <svg viewBox="0 0 24 24" aria-hidden="true">
                                 <path d="M6 6.5h12M6 10.5h12M6 14.5h8M6 18.5h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
                               </svg>
-                              <span><strong>Structured logs</strong><small>Traceability</small></span>
+                              <span><strong>Audit trail</strong><small>Operation history</small></span>
                             </li>
                           </ul>
                         </li>
                       </ol>
-                    </li>
-                  </ol>
+                    </div>
+                  </div>
+
+                  <div class="stack-lane">
+                    <p class="stack-lane-label">Controls</p>
+                    <ul class="stack-concerns">
+                      <li class="stack-item">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M16.8 7.2A6.2 6.2 0 1 0 18 13.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                          <path d="M16.2 4.4v3.4h3.4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                        <span><strong>Idempotency</strong><small>Duplicate protection</small></span>
+                      </li>
+                      <li class="stack-item">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M4 7.5h8M4 12h8M4 16.5h6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                          <path d="M15 14.2 17 16.4 20.5 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                        <span><strong>Reconciliation</strong><small>Network and bank checks</small></span>
+                      </li>
+                      <li class="stack-item">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M4 12h3l2-5 3 10 2-5h6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                        <span><strong>Traceability</strong><small>Transaction-level logs</small></span>
+                      </li>
+                      <li class="stack-item">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M12 3.5 18.5 6v5.5c0 4.2-2.8 7.4-6.5 9-3.7-1.6-6.5-4.8-6.5-9V6Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                          <path d="M9 12.2 11.2 14.4 15.2 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                        <span><strong>Validation</strong><small>Settlement data checks</small></span>
+                      </li>
+                    </ul>
+                  </div>
                 </figure>
               </section>
 
@@ -444,82 +616,184 @@
                     Visit Avalara <span aria-hidden="true">↗</span>
                   </a>
                 </div>
-                <figure class="stack-flow" aria-label="Technology flow: GitLab CI/CD and Helm deploying Java services and pipelines to Kubernetes on AWS">
-                  <ol class="stack-stages">
-                    <li class="stack-stage">
-                      <p class="stack-stage-label"><span>01</span> Source</p>
-                      <ul class="stack-items">
-                        <li class="stack-item">
-                          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/gitlab/gitlab-original.svg" alt="">
-                          <span><strong>GitLab</strong><small>Repository</small></span>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="stack-stage">
-                      <p class="stack-stage-label"><span>02</span> Delivery</p>
-                      <ul class="stack-items">
-                        <li class="stack-item">
-                          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/gitlab/gitlab-original.svg" alt="">
-                          <span><strong>GitLab CI/CD</strong><small>Build and test pipelines</small></span>
-                        </li>
-                        <li class="stack-item">
-                          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/helm/helm-original.svg" alt="">
-                          <span><strong>Helm</strong><small>Charts and releases</small></span>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="stack-boundary" style="--span: 2">
+                <figure class="stack-flow stack-flow-layered" aria-label="Reference architecture: GitLab CI/CD with quality gates releases Helm charts to a Kubernetes cluster on AWS, where services, scheduled pipelines, and AI orchestration use object storage, document, search, and vector stores, and model endpoints, governed by observability, security, resilience, and cost controls">
+                  <div class="stack-lane">
+                    <p class="stack-lane-label">Delivery</p>
+                    <ol class="stack-stages">
+                      <li class="stack-stage">
+                        <p class="stack-stage-label"><span>01</span> Source</p>
+                        <ul class="stack-items">
+                          <li class="stack-item">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/gitlab/gitlab-original.svg" alt="">
+                            <span><strong>GitLab</strong><small>Merge requests</small></span>
+                          </li>
+                        </ul>
+                      </li>
+                      <li class="stack-stage">
+                        <p class="stack-stage-label"><span>02</span> Build</p>
+                        <ul class="stack-items">
+                          <li class="stack-item">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/gitlab/gitlab-original.svg" alt="">
+                            <span><strong>CI/CD pipelines</strong><small>Build and package</small></span>
+                          </li>
+                        </ul>
+                      </li>
+                      <li class="stack-stage">
+                        <p class="stack-stage-label"><span>03</span> Verify</p>
+                        <ul class="stack-items">
+                          <li class="stack-item">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                              <path d="M12 3.5 18.5 6v5.5c0 4.2-2.8 7.4-6.5 9-3.7-1.6-6.5-4.8-6.5-9V6Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                              <path d="M9 12.2 11.2 14.4 15.2 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            <span><strong>Quality gates</strong><small>Tests and AI evals</small></span>
+                          </li>
+                        </ul>
+                      </li>
+                      <li class="stack-stage">
+                        <p class="stack-stage-label"><span>04</span> Release</p>
+                        <ul class="stack-items">
+                          <li class="stack-item">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/helm/helm-original.svg" alt="">
+                            <span><strong>Helm</strong><small>Versioned charts</small></span>
+                          </li>
+                        </ul>
+                      </li>
+                    </ol>
+                  </div>
+
+                  <p class="stack-lane-link"><span aria-hidden="true">↓</span> Helm release deploys to the cluster</p>
+
+                  <div class="stack-lane">
+                    <p class="stack-lane-label">Runtime</p>
+                    <div class="stack-boundary stack-boundary-cloud">
                       <p class="stack-boundary-label">AWS</p>
                       <ol class="stack-stages">
-                        <li class="stack-stage">
-                          <p class="stack-stage-label"><span>03</span> Runtime</p>
-                          <ul class="stack-items">
-                            <li class="stack-item stack-item-primary">
-                              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/kubernetes/kubernetes-plain.svg" alt="">
-                              <span><strong>Kubernetes</strong><small>Orchestration</small></span>
+                        <li class="stack-boundary stack-boundary-cluster" style="--span: 2">
+                          <p class="stack-boundary-label">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/kubernetes/kubernetes-plain.svg" alt="">
+                            Kubernetes cluster
+                          </p>
+                          <ol class="stack-stages">
+                            <li class="stack-stage">
+                              <p class="stack-stage-label"><span>05</span> Edge</p>
+                              <ul class="stack-items">
+                                <li class="stack-item">
+                                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M3.5 12h9M9.5 8.5 13 12l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M15 5h5.5v14H15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                                  </svg>
+                                  <span><strong>Ingress</strong><small>Routing and TLS</small></span>
+                                </li>
+                              </ul>
                             </li>
-                            <li class="stack-item">
-                              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/spring/spring-original.svg" alt="">
-                              <span><strong>Java / Spring</strong><small>Services</small></span>
+                            <li class="stack-stage">
+                              <p class="stack-stage-label"><span>06</span> Workloads</p>
+                              <ul class="stack-items">
+                                <li class="stack-item stack-item-primary">
+                                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <rect x="3.5" y="3.5" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                                    <rect x="13.5" y="3.5" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                                    <rect x="3.5" y="13.5" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                                    <rect x="13.5" y="13.5" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                                  </svg>
+                                  <span><strong>Services</strong><small>Domain APIs</small></span>
+                                </li>
+                                <li class="stack-item">
+                                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+                                    <path d="M12 8.5V12l2.5 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                  </svg>
+                                  <span><strong>Scheduled pipelines</strong><small>Batch ingestion</small></span>
+                                </li>
+                                <li class="stack-item">
+                                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M12 3.8 13.3 8.7 18.2 10 13.3 11.3 12 16.2 10.7 11.3 5.8 10 10.7 8.7Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                                  </svg>
+                                  <span><strong>AI orchestration</strong><small>LLM workflows</small></span>
+                                </li>
+                              </ul>
                             </li>
-                            <li class="stack-item">
-                              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/spring/spring-original.svg" alt="">
-                              <span><strong>Spring Batch</strong><small>CronJob pipelines</small></span>
-                            </li>
-                          </ul>
+                          </ol>
                         </li>
                         <li class="stack-stage">
-                          <p class="stack-stage-label"><span>04</span> Data and AI</p>
+                          <p class="stack-stage-label"><span>07</span> Data and AI</p>
                           <ul class="stack-items">
                             <li class="stack-item">
                               <svg viewBox="0 0 24 24" aria-hidden="true">
                                 <path d="M4 8.5 12 4.5l8 4L12 12.5 4 8.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
                                 <path d="M4 12.5 12 16.5l8-4M4 16.5 12 20.5l8-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
                               </svg>
-                              <span><strong>S3</strong><small>Versioned snapshots</small></span>
+                              <span><strong>Object storage</strong><small>Versioned raw data</small></span>
                             </li>
                             <li class="stack-item">
-                              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/mongodb/mongodb-original.svg" alt="">
-                              <span><strong>MongoDB</strong><small>Normalized records</small></span>
+                              <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M7 3.5h7l4 4V20.5H7Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                                <path d="M14 3.5V8h4M9.5 12.5h5M9.5 16h3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                              </svg>
+                              <span><strong>Document store</strong><small>Normalized records</small></span>
                             </li>
                             <li class="stack-item">
                               <svg viewBox="0 0 24 24" aria-hidden="true">
                                 <circle cx="10.5" cy="10.5" r="5.2" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
                                 <path d="M14.4 14.4 19 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
                               </svg>
-                              <span><strong>Apache Lucene</strong><small>Search index</small></span>
+                              <span><strong>Search index</strong><small>Fuzzy matching</small></span>
                             </li>
                             <li class="stack-item">
                               <svg viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M12 3.8 13.3 8.7 18.2 10 13.3 11.3 12 16.2 10.7 11.3 5.8 10 10.7 8.7Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                                <circle cx="6" cy="7" r="2" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+                                <circle cx="18" cy="9" r="2" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+                                <circle cx="10" cy="17.5" r="2" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+                                <path d="M8 7.4 16 8.6M7.2 8.7 9 15.7M11.8 16.4 16.6 10.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
                               </svg>
-                              <span><strong>LLM workflows</strong><small>Structured outputs</small></span>
+                              <span><strong>Vector index</strong><small>Semantic retrieval</small></span>
+                            </li>
+                            <li class="stack-item">
+                              <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <rect x="6.5" y="6.5" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                                <path d="M9.5 3v3.5M14.5 3v3.5M9.5 17.5V21M14.5 17.5V21M3 9.5h3.5M3 14.5h3.5M17.5 9.5H21M17.5 14.5H21" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                              </svg>
+                              <span><strong>Model endpoints</strong><small>LLM inference</small></span>
                             </li>
                           </ul>
                         </li>
                       </ol>
-                    </li>
-                  </ol>
+                    </div>
+                  </div>
+
+                  <div class="stack-lane">
+                    <p class="stack-lane-label">Cross-cutting</p>
+                    <ul class="stack-concerns">
+                      <li class="stack-item">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M3 12h4l2-5 4 10 2-5h6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                        <span><strong>Observability</strong><small>Metrics, logs, dashboards</small></span>
+                      </li>
+                      <li class="stack-item">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <rect x="5" y="10.5" width="14" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+                          <path d="M8.5 10.5V7.5a3.5 3.5 0 0 1 7 0v3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                        </svg>
+                        <span><strong>Security</strong><small>RBAC and secrets</small></span>
+                      </li>
+                      <li class="stack-item">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M16.8 7.2A6.2 6.2 0 1 0 18 13.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                          <path d="M16.2 4.4v3.4h3.4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                        <span><strong>Resilience</strong><small>Autoscaling and retries</small></span>
+                      </li>
+                      <li class="stack-item">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M4.5 16.5a7.5 7.5 0 1 1 15 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                          <path d="M12 16.5 15.5 11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                        </svg>
+                        <span><strong>Cost control</strong><small>Caching and model choice</small></span>
+                      </li>
+                    </ul>
+                  </div>
                 </figure>
               </section>
 
